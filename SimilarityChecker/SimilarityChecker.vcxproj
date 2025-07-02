@@ -127,7 +127,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SimilarityChecker.cpp" />
-    <ClCompile Include="SimilarityChecker_test.cpp" />
+    <ClCompile Include="SimilarityChecker_test.cpp">
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"> %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
