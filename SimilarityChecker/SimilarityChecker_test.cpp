@@ -6,25 +6,22 @@ using namespace testing;
 class SimilarityCheckerFixture : public Test {
 public:
 	SimilarityChecker checker;
+
+	void check(string str1, string str2, float expected) {
+		EXPECT_FLOAT_EQ(checker.checkLengthSimilarity(str1, str2), expected);
+	}
 };
 
 TEST_F(SimilarityCheckerFixture, CheckLengthSimilarityEqualString) {
-	string str1 = "ABC";
-	string str2 = "ABC";
-
-	EXPECT_EQ(checker.checkLengthSimilarity(str1, str2), 60);
+	check("ABC", "ABC", 60.0);
 }
 
 TEST_F(SimilarityCheckerFixture, CheckLengthSimilarityMaxDifferentString) {
-	string str1 = "ABC";
-	string str2 = "ABCDEF";
-	EXPECT_EQ(checker.checkLengthSimilarity(str1, str2), 0);
+	check("ABC", "ABCDEF", 0.0);
 }
 
 TEST_F(SimilarityCheckerFixture, CheckLengthSimilarityDifferentString) {
-	string str1 = "ABC";
-	string str2 = "ABCD";
-	EXPECT_FLOAT_EQ(checker.checkLengthSimilarity(str1, str2), 40.0);
+	check("ABC", "ABCD", 40.0);
 }
 
 int main() {
