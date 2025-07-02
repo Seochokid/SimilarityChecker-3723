@@ -1,32 +1,27 @@
 #include <string>
+#include <algorithm>
 
 using std::string;
+using std::abs;
+using std::min;
 
 class SimilarityChecker {
 public:
-	float checkLengthSimilarity(const string& str1, const string& str2) {
-		float length1 = str1.length();
-		float length2 = str2.length();
+    float checkLengthSimilarity(const string& str1, const string& str2) {
+        constexpr float MAX_SCORE = 60.0f;
+        constexpr int LENGTH_DIFF_LIMIT = 3;
 
-		if (str1 == str2) {
-			return 60.0;  // Equal strings
-		}
-		if (length1 == 0 || length2 == 0) {
-			return 0;  // One of the strings is empty
-		}
-		if (length1 > length2 && (length1 - length2) >= 3) {
-			return 0;  // Length difference is too large
-		}
-		if (length2 > length1 && (length2 - length1) >= 3) {
-			return 0;  // Length difference is too large
-		}
-		// (1 - (|A-B|)/min(A,B)) * 60
-		if (length1 < length2) {
-			return (1.0 - (length2 - length1) / length1) * 60.0;
-		} else {
-			return (1.0 - (length1 - length2) / length2) * 60.0;
-		}
+        float length1 = static_cast<float>(str1.length());
+        float length2 = static_cast<float>(str2.length());
 
-		return 0;
-	}
+        if (str1 == str2) {
+            return MAX_SCORE;  // Equal strings
+        }
+        if (abs(length1 - length2) >= LENGTH_DIFF_LIMIT) {
+            return 0.0f;  // Length difference is too large
+        }
+        float minLength = min(length1, length2);
+        float diff = abs(length1 - length2);
+        return (1.0f - (diff / minLength)) * MAX_SCORE;
+    }
 };
