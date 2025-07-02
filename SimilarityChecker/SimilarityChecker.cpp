@@ -9,7 +9,6 @@ class SimilarityChecker {
 public:
     float checkLengthSimilarity(const string& str1, const string& str2) {
         constexpr float MAX_SCORE = 60.0f;
-        constexpr int LENGTH_DIFF_LIMIT = 3;
 
         float length1 = static_cast<float>(str1.length());
         float length2 = static_cast<float>(str2.length());
@@ -17,7 +16,7 @@ public:
         if (str1 == str2) {
             return MAX_SCORE;  // Equal strings
         }
-        if (abs(length1 - length2) >= LENGTH_DIFF_LIMIT) {
+        if (length1 >= 2 * length2 || length2 >= 2 * length1) {
             return 0.0f;  // Length difference is too large
         }
         float minLength = min(length1, length2);
